@@ -4,9 +4,11 @@
 // 20/09/2022
 //usar o THIS aqui faz com que um objeto seja criado.
 // o throw protege a criação por meio de um erro
-
+// uma classe 
     class Lancamento {
             constructor (categoria,tipo,valor){
+                // condiçções múltiplas, && === AND e !== DIFERENTE
+                // throw new === estrutura para apontar um erro  
                 if(tipo !== "receita" && tipo !== "despesa"){
                     throw new Error("Lançamento Inválido: Tipo deve ser receita ou despesa.")
                 }
@@ -40,10 +42,22 @@
         return juros
     }        
     
+    function distribuirDespesas(lancamentos, total){
+                distribuicaoDeDespesas = []
+                for (lancamento of lancamentos){
+                if(lancamento.tipo === "despesa"){
+                percentual = arredondar((lancamento.valor/total)*100)
+                console.log(lancamento.categoria,"/","R$", lancamento.valor,"/", percentual,"%")
+                distribuicaoDeDespesas.push({categoria: lancamento.categoria, percentual})
+                }
+            }    
+            return distribuicaoDeDespesas
+        }
 
     function calcularSaldo(mes, saldoInicial, lancamentos){
         console.log(mes)
-        totalizadorDoMes = {saldo:0,juros:0,rendimentos:0,receitas:0,despesas:0}
+        // usando array no totalizadordomes
+        totalizadorDoMes = {saldo:0,juros:0,rendimentos:0,receitas:0,despesas:0,distribuicaoDeDespesas:[]}
         totalizadorDoMes.saldo = saldoInicial
             for(lancamento of lancamentos)  {
                 if (lancamento.tipo === "receita"){
@@ -54,6 +68,10 @@
                     totalizadorDoMes.despesas += lancamento.valor   
                 }
         }
+        /// O TOTALIZADORDOMES AQUI SE CONECTA COM PONTO AO DISTRIBUICAODEDESPESAS (QUE É UMA ARRAY) E 
+        //  O .PUSH AQUI SERVE PARA ADICIONAR ELESMENTOS À ESSA ARRAY
+            totalizadorDoMes.distribuicaoDeDespesas = distribuirDespesas(lancamentos, totalizadorDoMes.despesas)
+        
             negativo = totalizadorDoMes.saldo < 0
             if(negativo){
                 totalizadorDoMes.juros = calcularJuros(totalizadorDoMes.saldo)
