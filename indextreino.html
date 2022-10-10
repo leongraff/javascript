@@ -1,16 +1,41 @@
 <html>
     <script>
-        class Investimentos {
-            constructor(risco, rentabilidade, tipo, valor){
-                if risco !== "alto" && risco !== "medio" && risco !== "baixo"{
+        class Investimento {
+            constructor(nome, risco, rentabilidade, mercado, valor){
+                if  (nome === "")
+                    throw new Error("Digite um nome para o investimento.")
+                if (risco !== "alto" && risco !== "medio" && risco !== "baixo")
                     throw new Error ("Risco não está cadastrado no sistema.")
-                if rentabilidade !== "alta" && rentabilidade !== "media" && rentabilidade !== "baixa"
+                if (rentabilidade !== "alta" && rentabilidade !== "media" && rentabilidade !== "baixa")
                     throw new Error ("Rentabilidade não está cadastrada.")
-                }
-
-            }
-
+                if(mercado !== "tecnologia" && mercado !== "construcao")
+                    throw new Error ("Mercado não cadastrado")
+                if (valor <= 0)
+                    throw new Error ("Valor inválido.")
+                this.nome = nome;
+                this.risco = risco;
+                this.rentabilidade = rentabilidade;
+                this.mercado = mercado;
+                this.valor = valor;
         }
+
+    }
+
+    novoInvestimento = new Investimento("Xp Investimentos","alto","alta","tecnologia",2000)
+    console.log(novoInvestimento);
+
+    function calcularRentabilidade(mes,total,Investimentos){
+        for(Investimento of Investimentos){
+            if(risco === "alto"){
+            rentabilidade = "alta"
+            valor = valor * 1.2;
+            return rentabilidade
+        }
+        
+    }
+        
+}
+
 
 
     </script>
