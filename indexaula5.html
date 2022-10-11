@@ -7,22 +7,29 @@
             this.nome = nome //estado interno
             this.saldoInicial = saldoInicial
             this.totalizadorDoMes = { saldo: 0, juros: 0, rendimentos: 0, receitas: 0, despesas: 0, distribuicaoDeDespesas: [] }
-            this.lancamentos = [];
+            this.lancamentos = []; //lancamento aqui recebe os pushs ali de baixo
+
+        } //aqui é definida a função adicionarLancamento para responder aos pushs de lancamento
+
+        adicionarLancamento(lancamento) {
+
+            this.lancamentos.push(lancamento);
         }
+        calcularSaldo() { //para cada lancamento sendo ele receita ou despesa ele acresce ou decresce da classe "Mes"
+            for (const lancamento of this.lancamentos) {
+                if (lancamento.tipo === "receita") {
+                    this.totalizadorDoMes.saldo += lancamento.valor
+                }
+                if (lancamento.tipo === "despesa") {
+                    this.totalizadorDoMes.saldo -= lancamento.valor
+                }
+            }
+        }
+
     }
 
-    const janeiro = new Mes("janeiro", 1800)
 
-    console.log(janeiro);
 
-    // const não vai deixar a variável mudar de valor
-    // let para usar somando, subtraindo... ao longo do tempo...
-    let valor = 10
-    valor = 100
-    console.log(valor)
-
-    var avalor = 10
-    console.log(avalor)
     // 20/09/2022
     //usar o THIS aqui faz com que um objeto seja criado.
     // o throw protege a criação por meio de um erro
@@ -32,8 +39,10 @@
 
     class Lancamento {
         constructor(categoria, tipo, valor) {
+
             // condições múltiplas, && === AND e !== DIFERENTE
-            // throw new === estrutura para apontar um erro  
+            // throw new === estrutura para apontar um erro 
+
             if (tipo !== "receita" && tipo !== "despesa") {
                 throw new Error("Lançamento Inválido: Tipo deve ser receita ou despesa.")
             }
@@ -52,10 +61,6 @@
     function arredondar(valor) {
         return Math.round(valor * 100) / 100;
     }
-    novoLancamento = new Lancamento("Salário", "receita", 143000)
-    console.log(novoLancamento);
-    lancamento2 = new Lancamento("Aluguel", "despesa", 1500)
-    console.log(lancamento2);
 
 
     function calcularRendimentos(valor) {
@@ -81,9 +86,13 @@
 
     function calcularSaldo(mes, saldoInicial, lancamentos) {
         console.log(mes);
+
         // usando array no totalizadordomes
+
         const totalizadorDoMes = { saldo: 0, juros: 0, rendimentos: 0, receitas: 0, despesas: 0, distribuicaoDeDespesas: [] }
+
         // \/ aqui n faz sentido jogar um const pois é uma propriedade do totalizador...
+
         totalizadorDoMes.saldo = saldoInicial;
         for (const lancamento of lancamentos) {
             if (lancamento.tipo === "receita") {
@@ -97,6 +106,7 @@
         }
         /// O TOTALIZADORDOMES AQUI SE CONECTA COM PONTO AO DISTRIBUICAODEDESPESAS (QUE É UMA ARRAY) E 
         //  O .PUSH AQUI SERVE PARA ADICIONAR ELESMENTOS À ESSA ARRAY
+
         totalizadorDoMes.distribuicaoDeDespesas = distribuirDespesas(lancamentos, totalizadorDoMes.despesas)
 
         negativo = totalizadorDoMes.saldo < 0;
@@ -113,8 +123,72 @@
         return totalizadorDoMes;
     }
 
+    const janeiro = new Mes("janeiro", 1800)
+    janeiro.adicionarLancamento(new Lancamento("Salário", "receita", 2000))
+    janeiro.adicionarLancamento(new Lancamento("Aluguel", "despesa", 2500))
+    janeiro.calcularSaldo();
+    // /\ nesse caso acima é importante observar como chamar a função na classe e também os parênteses posteriores...
+    console.log(janeiro);
 
-    const saldoInicial = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // =========================================================================================================== //
+
+
+
+    // const não vai deixar a variável mudar de valor
+    // let para usar somando, subtraindo... ao longo do tempo...
+    //let valor = 10
+    //valor = 100
+    //console.log(valor)
+
+    // var define seu valor normalmente dentro do escopo inteiro do bloco
+    //var avalor = 10
+    //console.log(avalor)
+
+
+
+    /* const saldoInicial = 0
+
+
+    novoLancamento = new Lancamento("Salário", "receita", 143000)
+    console.log(novoLancamento);
+    lancamento2 = new Lancamento("Aluguel", "despesa", 1500)
+    console.log(lancamento2);
 
     const lancamentosJaneiro = [
         new Lancamento("Salário", "receita", 3000),
@@ -197,7 +271,7 @@
     problema = false;
 
     ferramentaDeTrabalho = { programa: "senior", problema: false };
-    console.log(ferramentaDeTrabalho);
+    console.log(ferramentaDeTrabalho); */
 </script>
 
 </html>
